@@ -146,7 +146,7 @@ $addButton.addEventListener('click', function () {
   todos.push(todo);
   saveTodos();
   addToMonth(todo);
-
+//addToWeek();
 
   element.value = '';
   mon.value = '';
