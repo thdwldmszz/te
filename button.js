@@ -142,10 +142,11 @@ function addToWeek(todo){
   let q=mm[0].textContent.slice(5,7);
 
   let x, z, j, flag=0;
-
+  console.log(parseInt(q));
   if(q>todo.month){
     while(1){
       q=mm[0].textContent.slice(5,7);
+
       if(q===todo.month){
         break;
       }
@@ -155,15 +156,17 @@ function addToWeek(todo){
   else if (q<todo.month){
     while(1){
     q=mm[0].textContent.slice(5,7);
+    
     if(q===todo.month){
       break;
     }
     nextWeek();
     }
   }
-  if(q===todo.month){
+  //if(q===todo.month){
     while(1){
       if(flag===1){
+        nextWeek();
         break;
       }
       x=parseInt(dd[0].textContent);
@@ -195,7 +198,7 @@ function addToWeek(todo){
         nextWeek();
       }
     }
-  }
+  //}
   
   let tm = document.getElementById("times");
   for(i=0;i<24;i++){
@@ -293,7 +296,7 @@ $addButton.addEventListener('click', function () {
 
   todos.push(todo);
   saveTodos();
-  addToMonth(todo);
+  //addToMonth(todo);
   addToWeek(todo);
 
   element.value = '';
