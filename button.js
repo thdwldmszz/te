@@ -45,19 +45,24 @@ $closeButton.addEventListener('click', function () {
 
 let todos = [];
 
+
 function loadTodos() {
   let lastTasks = localStorage.getItem("todos");
   if (!lastTasks) return;
 
   todos = JSON.parse(lastTasks);
-  todos.forEach(addToMonth);
+  //todos.forEach(addToMonth);
+  todos.forEach(addToWeek);
 }
+
+
 
 function saveTodos() {
   localStorage.setItem("todos", JSON.stringify(todos));
 }
 
 function addToMonth(todo){
+  let date = new Date();
   let month = date.getMonth();
 
   let div = document.createElement("div");
@@ -88,15 +93,19 @@ function addToMonth(todo){
   }
 
   let y = document.getElementsByClassName('date');
- // let z;
-  for(i=0;i<31;i++){
-    if(todo.date<10){
-      if(y[i].textContent.slice(0,1)===todo.date){
-        z=y[i];
-        break;
+  let z;
+  if(todo.date>24){
+    if(parseInt(y[0].textContent.slice(0,2))>20){
+      for(i=21;i<35;i++){
+        if(y[i].textContent.slice(0,2)===todo.date){
+          z=y[i];
+          break;
+        }
       }
     }
-    else{
+  }
+  else{
+    for(i=0;i<35;i++){
       if(y[i].textContent.slice(0,2)===todo.date){
         z=y[i];
         break;
@@ -113,9 +122,148 @@ function addToMonth(todo){
 			saveTodos();
 			div.remove();
 		});
-
+  
   z.appendChild(div);
   saveTodos();
+}
+
+function addToWeek(todo){
+
+  let div = document.createElement("div");
+
+  let span = document.createElement("span");
+  span.className = "todo-w";
+
+  span.textContent = todo.task+'('+todo.ST+":"+todo.ET+')';
+  div.appendChild(span);
+
+  let dd = document.getElementsByClassName('date');
+  let mm = document.getElementsByClassName('YM');
+  let q=mm[0].textContent.slice(5,7);
+
+  let x, z, j, flag=0;
+
+  if(q>todo.month){
+    while(1){
+      q=mm[0].textContent.slice(5,7);
+      if(q===todo.month){
+        break;
+      }
+      lastWeek();
+    }
+  }
+  else if (q<todo.month){
+    while(1){
+    q=mm[0].textContent.slice(5,7);
+    if(q===todo.month){
+      break;
+    }
+    nextWeek();
+    }
+  }
+  if(q===todo.month){
+    while(1){
+      if(flag===1){
+        break;
+      }
+      x=parseInt(dd[0].textContent);
+      z=parseInt(dd[6].textContent);
+      if(x<=todo.date && z>=todo.date){
+        for(i=0;i<7;i++){
+          if(dd[i].textContent===todo.date){
+            z=i;
+            flag=1;
+            break;
+          } 
+        }
+      }
+      else if(x>todo.date){
+        if(x>20){
+          if(x>z){
+            for(i=0;i<7;i++){
+              if(dd[i].textContent===todo.date){
+                z=i;
+                flag=1;
+                break;
+              } 
+            }
+          }
+        }
+        lastWeek();
+      }
+      else if(x<todo.date){
+        nextWeek();
+      }
+    }
+  }
+  
+  let tm = document.getElementById("times");
+  for(i=0;i<24;i++){
+    let ta = tm.getElementsByTagName("tr")[i];
+    if(todo.ST<10){
+      if(ta.textContent.slice(0,1)===todo.ST){
+        j=i;
+        break;
+      }
+    }
+    else if(todo.ST>=10){
+      if(ta.textContent.slice(0,2)===todo.ST-12){
+        j=i;
+        break;
+      }
+    }
+    else{
+      if(ta.textContent.slice(0,2)===todo.ST){
+        j=i;
+        break;
+      }
+    } 
+  }
+  for(i=0;i<24;i++){
+    let ta = tm.getElementsByTagName("tr")[i];
+    if(todo.ET>23){
+      k=23;
+    }
+    if(todo.ET<10){
+      if(ta.textContent.slice(0,1)===todo.ET){
+        k=i;
+        break;
+      }
+    }
+    else if(todo.ET>=10&&todo.ET<=23){
+      if(ta.textContent.slice(0,2)===todo.ET){
+        k=i;
+        break;
+      }
+    }
+    else{
+      if(ta.textContent.slice(0,2)===todo.ET){
+        k=i;
+        break;
+      }
+    }
+  }
+  let sttime = 7*j+z;
+  let entime = 7*k+z;
+  let tl = tm.getElementsByTagName("td");
+
+  for(i=sttime; i<=entime;i+=7){
+    tl[i].style.backgroundColor = "rgb(168, 216, 223)";
+  } 
+
+  let checkbtn = document.createElement("button");
+  checkbtn.className = "checkbtn btn-sm btn-danger";
+  div.appendChild(checkbtn);
+
+  checkbtn.addEventListener("click", () => {
+    todos = todos.filter(t => t !== todo);
+    saveTodos();
+    div.remove();
+  });
+
+  tl[sttime].appendChild(div);
+  saveTodos();
+  console.log(todos);
 }
 
 window.addEventListener("load", () => {
@@ -146,7 +294,7 @@ $addButton.addEventListener('click', function () {
   todos.push(todo);
   saveTodos();
   addToMonth(todo);
-//addToWeek();
+  addToWeek(todo);
 
   element.value = '';
   mon.value = '';
