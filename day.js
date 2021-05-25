@@ -72,7 +72,7 @@ function addToDay(todo) {
   let mm = YM[0].textContent.slice(5, 7);
   if (mm !== todo.month) return false;
 
-  let dates = document.getElementsByClassName("date");
+  let dates = document.getElementsByClassName("date-wd");
   for (let i = 0; i < 7; i++) {
     if (dates[i].textContent.length !== 0) {
       if (todo.date !== dates[i].textContent) return false;
@@ -128,7 +128,7 @@ function addToDay(todo) {
   let tl = tm.getElementsByTagName("td");
 
   var color = "#" + Math.round(Math.random() * 0xffffff).toString(16);
-  for (let i = sttime; i <= entime; i++) {
+  for (let i = sttime; i < entime; i++) {
     tl[i].style.backgroundColor = color;
   }
 
@@ -182,7 +182,7 @@ $addButton.addEventListener("click", function () {
 
   hideModal();
 
-  loadTodos();
+  addToDay(todo);
 });
 
 //Display
@@ -229,12 +229,12 @@ const displayDay = function () {
       ) {
         dateHtml[
           i
-        ] = `<div class = "date border border-primary rounded">${date}</div>`;
+        ] = `<div class = "date-wd border border-primary rounded">${date}</div>`;
       } else {
-        dateHtml[i] = `<div class = "date" >${date}</div>`;
+        dateHtml[i] = `<div class = "date-wd" >${date}</div>`;
       }
     } else {
-      dateHtml[i] = `<div class = "date" ></div>`;
+      dateHtml[i] = `<div class = "date-wd" ></div>`;
     }
   }
   document.querySelector(".dates").innerHTML = dateHtml.join("");

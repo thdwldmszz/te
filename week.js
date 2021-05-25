@@ -66,78 +66,32 @@ function addToWeek(todo) {
   span.textContent = todo.task;
   div.appendChild(span);
 
-  let dd = document.getElementsByClassName("date");
-  let mm = document.getElementsByClassName("YM");
-  let q = mm[0].textContent.slice(5, 7);
 
-  let x,
-    z,
-    j,
-    flag = 0;
-
-  /*
-  if (q > todo.month) {
-    while (1) {
-      q = mm[0].textContent.slice(5, 7);
-      if (q === todo.month) {
-        break;
-      }
-      lastWeek();
-    }
-  } else if (q < todo.month) {
-    while (1) {
-      q = mm[0].textContent.slice(5, 7);
-      if (q === todo.month) {
-        break;
-      }
-      nextWeek();
-    }
-  }*/
-  /*
-  while (1) {
-    if (flag === 1) {
+  let dates = document.getElementsByClassName("date-wd");
+  let edge = -1;
+  let tmp = 0;
+  for (let i = 0; i < 7; i++) {
+    if (tmp > dates[i].textContent) {
+      edge = i;
       break;
     }
-    x = parseInt(dd[0].textContent);
-    z = parseInt(dd[6].textContent);
-    if (x <= todo.date && z >= todo.date) {
-      for (i = 0; i < 7; i++) {
-        if (dd[i].textContent === todo.date) {
-          z = i;
-          flag = 1;
-          break;
-        }
-      }
-    } else if (x > z) {
-      if (todo.month === q && todo.date >= x) {
-        for (i = 0; i < 7; i++) {
-          if (dd[i].textContent === todo.date) {
-            z = i;
-            flag = 1;
-            break;
-          }
-        }
-      } else {
-        q = mm[0].textContent.slice(5, 7);
-        if (todo.month - 1 === parseInt(q)) {
-          for (i = 0; i < 7; i++) {
-            if (dd[i].textContent === todo.date) {
-              z = i;
-              flag = 1;
-              break;
-            }
-          }
-        } else break; //lastWeek();
-      }
-    } else if (x < z) {
-      if (todo.date < x) {
-        break; //lastWeek();
-      } else {
-        break; //nextWeek();
-      }
-    }
+    tmp = dates[i].textContent;
   }
-*/
+  let YM = document.getElementsByClassName("YM");
+  let yy = YM[0].textContent.slice(0, 4);
+  if (yy !== todo.year) return false;
+  let mm = YM[0].textContent.slice(5, 7);
+  if (edge === -1 && mm !== todo.month) return false;
+  if (edge !== -1 && mm !== todo.month && todo.date > 6 - edge) return false;
+  if (edge !== -1 && mm === todo.month && todo.date <= 6 - edge) return false;
+
+  let j, k;
+  let z = -1;
+  for (let i = 0; i < 7; i++) {
+    if (todo.date === dates[i].textContent) z = i;
+  }
+  if (z === -1) return false;
+
   let tm = document.getElementById("times");
   for (i = 0; i < 24; i++) {
     let ta = tm.getElementsByTagName("tr")[i];
@@ -185,7 +139,7 @@ function addToWeek(todo) {
   let tl = tm.getElementsByTagName("td");
 
   var color = "#" + Math.round(Math.random() * 0xffffff).toString(16);
-  for (i = sttime; i <= entime; i += 7) {
+  for (i = sttime; i < entime; i += 7) {
     tl[i].style.background = color;
   }
 
@@ -239,7 +193,7 @@ $addButton.addEventListener("click", function () {
 
   hideModal();
 
-  loadTodos();
+  addToWeek(todo);
 });
 
 //Display
@@ -297,20 +251,20 @@ const displayWeek = function () {
       if (i <= lastIdx || i >= nextIdx)
         dates[
           i
-        ] = `<div class = "date" ><span style = "opacity: .3" >${date}</span></div>`;
+        ] = `<div class = "date-wd" ><span style = "opacity: .3" >${date}</span></div>`;
       else if (dates[i] === today.getDate())
         dates[
           i
-        ] = `<div class = "date border border-primary rounded">${date}</div>`;
-      else dates[i] = `<div class = "date">${date}</div>`;
+        ] = `<div class = "date-wd border border-primary rounded">${date}</div>`;
+      else dates[i] = `<div class = "date-wd">${date}</div>`;
     });
   } else {
     dates.forEach((date, i) => {
       if (i <= lastIdx || i >= nextIdx)
         dates[
           i
-        ] = `<div class = "date" ><span style = "opacity: .3" >${date}</span></div>`;
-      else dates[i] = `<div class = "date">${date}</div>`;
+        ] = `<div class = "date-wd" ><span style = "opacity: .3" >${date}</span></div>`;
+      else dates[i] = `<div class = "date-wd">${date}</div>`;
     });
   }
 
