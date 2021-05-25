@@ -17,6 +17,14 @@ body {
   margin-bottom: 0px;
   float: center;
 }
+.calendar-d {
+  width: 600px;
+  height: 200px;
+  margin: 100px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  float: center;
+}
 .container-w {
   width: 800px;
   height: 500px;
@@ -28,7 +36,6 @@ body {
 }
 
 .YM {
-  position: absolute;
   left: 46%;
   font-size: 30px;
   color: royalblue;

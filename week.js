@@ -4,12 +4,12 @@ const displayTable = function () {
   let times = [];
   for (let i = 0; i < 24; i++) {
     times.push(
-      `<tr><th scope = "row" style = "width: 100px; height: 50px">${i}:00</th>`
+      `<tr><th scope = "row" style = "width: 100px; height: 50px">${i}:00</th>`,
     );
     for (let j = 0; j < 7; j++) times.push(`<td></td>`);
     times.push(`</tr>`);
   }
-  document.querySelector("#times").innerHTML = times.join("");
+  document.querySelector('#times').innerHTML = times.join('');
 };
 
 const displayWeek = function () {
@@ -18,7 +18,7 @@ const displayWeek = function () {
   const date = d.getDate(); // 1~31
   const day = d.getDay(); // 0~6
 
-  document.querySelector(".YM").textContent = `${year} ${month + 1}`;
+  document.querySelector('.YM').textContent = `${year} ${month + 1}`;
 
   const lastEnd = new Date(year, month, 0);
   const thisEnd = new Date(year, month + 1, 0);
@@ -69,7 +69,7 @@ const displayWeek = function () {
     });
   }
 
-  document.querySelector(".dates").innerHTML = dates.join("");
+  document.querySelector('.dates').innerHTML = dates.join('');
 
   displayTable();
 };
