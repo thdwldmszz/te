@@ -66,6 +66,7 @@ function addToWeek(todo) {
   span.textContent = todo.task;
   div.appendChild(span);
 
+
   let dates = document.getElementsByClassName("date-wd");
   let edge = -1;
   let tmp = 0;
