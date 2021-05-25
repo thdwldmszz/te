@@ -66,7 +66,7 @@ function addToWeek(todo) {
   span.textContent = todo.task;
   div.appendChild(span);
 
-  let dates = document.getElementsByClassName("date");
+  let dates = document.getElementsByClassName("date-wd");
   let edge = -1;
   let tmp = 0;
   for (let i = 0; i < 7; i++) {
@@ -250,20 +250,20 @@ const displayWeek = function () {
       if (i <= lastIdx || i >= nextIdx)
         dates[
           i
-        ] = `<div class = "date" ><span style = "opacity: .3" >${date}</span></div>`;
+        ] = `<div class = "date-wd" ><span style = "opacity: .3" >${date}</span></div>`;
       else if (dates[i] === today.getDate())
         dates[
           i
-        ] = `<div class = "date border border-primary rounded">${date}</div>`;
-      else dates[i] = `<div class = "date">${date}</div>`;
+        ] = `<div class = "date-wd border border-primary rounded">${date}</div>`;
+      else dates[i] = `<div class = "date-wd">${date}</div>`;
     });
   } else {
     dates.forEach((date, i) => {
       if (i <= lastIdx || i >= nextIdx)
         dates[
           i
-        ] = `<div class = "date" ><span style = "opacity: .3" >${date}</span></div>`;
-      else dates[i] = `<div class = "date">${date}</div>`;
+        ] = `<div class = "date-wd" ><span style = "opacity: .3" >${date}</span></div>`;
+      else dates[i] = `<div class = "date-wd">${date}</div>`;
     });
   }
 
