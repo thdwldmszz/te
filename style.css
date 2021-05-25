@@ -65,6 +65,8 @@ body {
   padding: 15px;
   text-align: center;
   font-weight: 500;
+  height: 107px;
+  width: 85.7px;
 }
 
 .day:nth-child(7n + 1),
@@ -97,6 +99,6 @@ body {
   background-color: white;
 }
 
-.table{
+.table {
   table-layout: fixed;
 }
