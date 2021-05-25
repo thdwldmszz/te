@@ -79,7 +79,6 @@ function addToWeek(todo) {
   if (q > todo.month) {
     while (1) {
       q = mm[0].textContent.slice(5, 7);
-
       if (q === todo.month) {
         break;
       }
@@ -88,7 +87,6 @@ function addToWeek(todo) {
   } else if (q < todo.month) {
     while (1) {
       q = mm[0].textContent.slice(5, 7);
-
       if (q === todo.month) {
         break;
       }

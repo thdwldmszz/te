@@ -68,45 +68,27 @@ function addToMonth(todo) {
   span.textContent = todo.task + "(" + todo.ST + ":" + todo.ET + ")";
   div.appendChild(span);
 
-  let mm = document.getElementsByClassName("YM");
-  let q = mm[0].textContent.slice(5, 7);
-
-  /*
-  if (q > todo.month) {
-    while (1) {
-      q = mm[0].textContent.slice(5, 7);
-
-      if (q === todo.month) {
-        break;
-      }
-      //lastMonth();
-    }
-  } else if (q < todo.month) {
-    while (1) {
-      q = mm[0].textContent.slice(5, 7);
-
-      if (q === todo.month) {
-        break;
-      }
-      //nextMonth();
-    }
-  }*/
-
-  let y = document.getElementsByClassName("date");
+  let YM = document.getElementsByClassName("YM");
+  let yy = YM[0].textContent.slice(0, 4);
+  let mm = YM[0].textContent.slice(5, 7);
+  let dd = document.getElementsByClassName("date");
   let z;
-  if (todo.date > 24) {
-    if (parseInt(y[0].textContent.slice(0, 2)) > 20) {
-      for (i = 21; i < 35; i++) {
-        if (y[i].textContent.slice(0, 2) === todo.date) {
-          z = y[i];
-          break;
-        }
+  
+  if (yy !== todo.year) return false;
+  if (mm !== todo.month) return false;
+  
+  if(todo.date>22){
+    for (let i = 21; i <= 42; i++) {
+      if (dd[i].textContent === todo.date){
+        z = dd[i];
+        break;
       }
-    }
-  } else {
-    for (i = 0; i < 35; i++) {
-      if (y[i].textContent.slice(0, 2) === todo.date) {
-        z = y[i];
+    } 
+  }
+  else {
+    for (let i = 0; i <= 42; i++) {
+      if (dd[i].textContent === todo.date) {
+        z = dd[i];
         break;
       }
     }
@@ -126,6 +108,7 @@ function addToMonth(todo) {
   saveTodos();
 }
 
+
 $addButton.addEventListener("click", function () {
   let element = document.querySelector("#task-input");
   let mon = document.querySelector("#month-input");
@@ -139,7 +122,7 @@ $addButton.addEventListener("click", function () {
     inputDate = date.value,
     startTime = st.value,
     endTime = et.value;
-  inputYear = year.value;
+    inputYear = year.value;
 
   let todo = {
     task: inputTask,
