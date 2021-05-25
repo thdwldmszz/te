@@ -128,7 +128,7 @@ function addToDay(todo) {
   let tl = tm.getElementsByTagName("td");
 
   var color = "#" + Math.round(Math.random() * 0xffffff).toString(16);
-  for (let i = sttime; i <= entime; i++) {
+  for (let i = sttime; i < entime; i++) {
     tl[i].style.backgroundColor = color;
   }
 
