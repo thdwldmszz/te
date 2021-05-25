@@ -54,7 +54,7 @@ function loadTodos() {
   if (!lastTasks) return;
 
   todos = JSON.parse(lastTasks);
-  todos.forEach(addToDay(todo));
+  todos.forEach(addToDay);
 }
 
 function addToDay(todo) {
@@ -66,62 +66,23 @@ function addToDay(todo) {
   span.textContent = todo.task;
   div.appendChild(span);
 
-  let mm = document.getElementsByClassName("YM");
-  let dd = document.getElementsByClassName("date");
-  let q = mm[0].textContent.slice(5, 7);
+  let YM = document.getElementsByClassName("YM");
+  let yy = YM[0].textContent.slice(0, 4);
+  if (yy !== todo.year) return false;
+  let mm = YM[0].textContent.slice(5, 7);
+  if (mm !== todo.month) return false;
 
-  if (q > todo.month) {
-    while (1) {
-      q = mm[0].textContent.slice(5, 7);
-
-      if (q === todo.month) {
-        break;
-      }
-      break; //lastDay();
-    }
-  } else if (q < todo.month) {
-    while (1) {
-      q = mm[0].textContent.slice(5, 7);
-
-      if (q === todo.month) {
-        break;
-      }
-      break; //nextDay();
-    }
-  }
-  let flag = 0;
-  if (todo.date > 27) {
-    while (1) {
-      if (flag === 1) {
-        break;
-      }
-      for (i = 0; i < 7; i++) {
-        if (dd[i].textContent === todo.date) {
-          flag = 1;
-          break;
-        }
-      }
-      if (flag === 0) break; //lastDay();
-    }
-  } else {
-    while (1) {
-      if (flag === 1) {
-        break;
-      }
-      for (i = 0; i < 7; i++) {
-        if (dd[i].textContent === todo.date) {
-          flag = 1;
-          break;
-        }
-      }
-      if (flag === 0) break; //nextDay();
+  let dates = document.getElementsByClassName("date");
+  for (let i = 0; i < 7; i++) {
+    if (dates[i].textContent.length !== 0) {
+      if (todo.date !== dates[i].textContent) return false;
     }
   }
 
   let tm = document.getElementById("times");
   let sttime, entime;
 
-  for (i = 0; i < 24; i++) {
+  for (let i = 0; i < 24; i++) {
     let ta = tm.getElementsByTagName("tr")[i];
     if (todo.ST < 10) {
       if (ta.textContent.slice(0, 1) === todo.ST) {
@@ -141,7 +102,7 @@ function addToDay(todo) {
     }
   }
 
-  for (i = 0; i < 24; i++) {
+  for (let i = 0; i < 24; i++) {
     let ta = tm.getElementsByTagName("tr")[i];
     if (todo.ET > 23) {
       entime = 23;
@@ -167,7 +128,7 @@ function addToDay(todo) {
   let tl = tm.getElementsByTagName("td");
 
   var color = "#" + Math.round(Math.random() * 0xffffff).toString(16);
-  for (i = sttime; i <= entime; i++) {
+  for (let i = sttime; i <= entime; i++) {
     tl[i].style.backgroundColor = color;
   }
 
@@ -182,7 +143,7 @@ function addToDay(todo) {
   });
 
   tl[sttime].appendChild(div);
-  saveTodos();
+  //saveTodos();
 }
 
 $addButton.addEventListener("click", function () {
@@ -191,15 +152,18 @@ $addButton.addEventListener("click", function () {
   let date = document.querySelector("#day-input");
   let st = document.querySelector("#start-time-input");
   let et = document.querySelector("#end-time-input");
+  let year = document.querySelector("#year-input");
 
   let inputTask = element.value,
     inputMonth = mon.value,
     inputDate = date.value,
     startTime = st.value,
     endTime = et.value;
+  inputYear = year.value;
 
   let todo = {
     task: inputTask,
+    year: inputYear,
     month: inputMonth,
     date: inputDate,
     ST: startTime,
@@ -208,13 +172,13 @@ $addButton.addEventListener("click", function () {
 
   todos.push(todo);
   saveTodos();
-  //addToDay(todo);
 
   element.value = "";
   mon.value = "";
   date.value = "";
   st.value = "";
   et.value = "";
+  year.value = "";
 
   hideModal();
 
@@ -276,6 +240,7 @@ const displayDay = function () {
   document.querySelector(".dates").innerHTML = dateHtml.join("");
 
   displayTable();
+
   loadTodos();
 };
 

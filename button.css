@@ -38,7 +38,12 @@
   top: 17%;
   transform: translate(-50%, 0%);
 }
-
+.modal-content > .year-container {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%, 0%);
+}
 .modal-content > .month-container {
   position: absolute;
   left: 30%;
@@ -115,24 +120,24 @@
   animation: 0.5s fade-out-modal;
 }
 
-.todo{
+.todo {
   font-weight: 100;
   font-size: 12px;
   color: black;
 }
 
-.todo-w{
+.todo-w {
   font-weight: 100;
   font-size: 14px;
   color: black;
 }
 
-.btn-danger{
+.btn-danger {
   height: 20px;
   width: 20px;
 }
 
-.todo-d{
+.todo-d {
   font-weight: 100;
   font-size: 15px;
   color: black;

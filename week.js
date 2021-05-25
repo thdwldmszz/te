@@ -211,15 +211,18 @@ $addButton.addEventListener("click", function () {
   let date = document.querySelector("#day-input");
   let st = document.querySelector("#start-time-input");
   let et = document.querySelector("#end-time-input");
+  let year = document.querySelector("#year-input");
 
   let inputTask = element.value,
     inputMonth = mon.value,
     inputDate = date.value,
     startTime = st.value,
     endTime = et.value;
+  inputYear = year.value;
 
   let todo = {
     task: inputTask,
+    year: inputYear,
     month: inputMonth,
     date: inputDate,
     ST: startTime,
@@ -234,8 +237,10 @@ $addButton.addEventListener("click", function () {
   date.value = "";
   st.value = "";
   et.value = "";
+  year.value = "";
 
   hideModal();
+
   loadTodos();
 });
 
