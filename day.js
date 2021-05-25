@@ -182,7 +182,7 @@ $addButton.addEventListener("click", function () {
 
   hideModal();
 
-  loadTodos();
+  addToDay(todo);
 });
 
 //Display

@@ -162,7 +162,7 @@ $addButton.addEventListener("click", function () {
 
   hideModal();
 
-  loadTodos();
+  addToMonth(todo);
 });
 
 // Display

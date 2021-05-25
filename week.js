@@ -192,7 +192,7 @@ $addButton.addEventListener("click", function () {
 
   hideModal();
 
-  loadTodos();
+  addToWeek(todo);
 });
 
 //Display
